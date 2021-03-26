@@ -1,0 +1,8 @@
+{
+  "name": "QC App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "effe72b5"
+}
