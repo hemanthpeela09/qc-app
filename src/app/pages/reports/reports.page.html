@@ -1,0 +1,107 @@
+<!--<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>reports</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+</ion-content>-->
+
+<ion-menu contentId="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Reports</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+      <!--<div *ngfor="let p of pages">
+        <ion-menu-toggle *ngif="p.url">
+          <ion-item [routerLink]="p.url" routerDirection="root" routerLinkActive="active">
+            <ion-icon [name]="p.icon" slot="start"></ion-icon>
+            <ion-lable>
+              {{ p.title }}
+            </ion-lable>
+          </ion-item>
+        </ion-menu-toggle>
+
+          <ion-item button *ngif="p.children?.length > 0" (click)="p.open = !p.open"
+            [class.active-parent]="p.open" detail = "false">
+            <ion-icon slot="start" name="arrow-forward" *ngif="!p.open"></ion-icon>
+            <ion-icon slot="start" name="arrow-down" *ngif="p.open"></ion-icon>
+          </ion-item>
+      </div>-->
+    
+        <ion-menu-toggle auto-hide="false">
+          <ion-list lines="none">
+            <ion-item [routerLink]="'/'">
+              <ion-icon name="home" slot="start"></ion-icon>
+              Home
+            </ion-item>  
+          </ion-list>
+        </ion-menu-toggle>
+        <ion-item lines="none" (click)="HSRreport === 1 ? HSRreport = 0 : HSRreport = 1">
+          <ion-icon name="logo-buffer" slot="start"></ion-icon>
+          HSE Reports
+          <ion-icon slot="end" name="HSRreport? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+        </ion-item>
+  
+        <ion-menu-toggle auto-hide="false">
+          <ion-list lines="none">
+            <ion-item menuclose [hidden]="!HSRreport" [routerLink]="['/notifications']"
+              [queryParams]="{ type: 'document' }" menuClose class="sub-menu">
+              <ion-icon name="document" slot="start"></ion-icon>
+              Incident\Accident
+            </ion-item>
+            <ion-item menuclose [hidden]="!HSRreport" [routerLink]="['/notifications']"
+              [queryParams]="{ type: 'document' }" menuClose class="sub-menu">
+              <ion-icon name="document" slot="start"></ion-icon>
+              Hazard
+            </ion-item>
+          </ion-list>
+        </ion-menu-toggle>
+
+        <ion-item lines="none" (click)="Qualityreport === 1 ? Qualityreport = 0 : Qualityreport = 1">
+          <ion-icon name="logo-buffer" slot="start"></ion-icon>
+          Quality Reports
+          <ion-icon slot="end" name="Qualityreport? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+        </ion-item>
+  
+        <ion-menu-toggle auto-hide="false">
+          <ion-list lines="none">
+            <ion-item menuclose [hidden]="!Qualityreport" [routerLink]="['/notifications']"
+              [queryParams]="{ type: 'document' }" menuClose class="sub-menu">
+              <ion-icon name="document" slot="start"></ion-icon>
+              Non Confirmance
+            </ion-item>
+            <ion-item menuclose [hidden]="!Qualityreport" [routerLink]="['/notifications']"
+              [queryParams]="{ type: 'document' }" menuClose class="sub-menu">
+              <ion-icon name="document" slot="start"></ion-icon>
+              Fit up Inspection
+            </ion-item>
+            <ion-item menuclose [hidden]="!Qualityreport" [routerLink]="['/notifications']"
+              [queryParams]="{ type: 'document' }" menuClose class="sub-menu">
+              <ion-icon name="document" slot="start"></ion-icon>
+              Weld Visuals
+            </ion-item>
+            <ion-item menuclose [hidden]="!Qualityreport" [routerLink]="['/notifications']"
+              [queryParams]="{ type: 'document' }" menuClose class="sub-menu">
+              <ion-icon name="document" slot="start"></ion-icon>
+              NDT Reports
+            </ion-item>
+          </ion-list>
+        </ion-menu-toggle>
+
+  </ion-content>
+</ion-menu>
+
+<ion-router-outlet id="content" main></ion-router-outlet>
+
+
