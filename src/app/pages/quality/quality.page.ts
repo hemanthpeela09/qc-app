@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QualityPage implements OnInit {
 
+  customActionSheetOptions: any = {  
+    header: 'Quality Report',  
+    subHeader: 'Select specific report to create'  
+  };  
+
   constructor() { }
 
   ngOnInit() {

@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: HSEPage
-  }
+  },
+  /*{
+    path: '/hse',
+    loadChildren: () => import('../hse/hse.module').then( m => m.HSEPageModule)
+  },*/
 ];
 
 @NgModule({

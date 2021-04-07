@@ -1,12 +1,101 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>HSE</ion-title>
+    <ion-title>HSE Report</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+    <ion-content class="padding" color="light" fullscreen>  
+      <ion-list>  
+        <ion-list-header>Select a HSE Report and click on create button</ion-list-header>       
+        <ion-item>  
+          <ion-label>Choose specific report</ion-label>  
+          <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">  
+            <ion-select-option value="iaform">Incident\Accident</ion-select-option>  
+            <ion-select-option value="fiform">Hazard</ion-select-option>    
+          </ion-select>  
+        </ion-item>    
+      </ion-list>  
+
+  <form>
+    <ion-item lines="full">
+      <ion-label position="floating">Project/Division</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Location</ion-label>
+      <ion-input type="email" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Type of accident/incident*</ion-label>
+      <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">  
+        <ion-select-option value="value1">Injury</ion-select-option>  
+        <ion-select-option value="value2">Damage</ion-select-option>    
+        <ion-select-option value="value3">Environment</ion-select-option>    
+        <ion-select-option value="value4">Breach of procedure</ion-select-option>    
+        <ion-select-option value="value5">Other</ion-select-option>    
+      </ion-select>  
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Description of the incident</ion-label>
+      <ion-textarea rows="2" cols="20" placeholder="Enter any notes here..."></ion-textarea>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">What action did you take</ion-label>
+      <ion-textarea rows="2" cols="20" placeholder="Enter any notes here..."></ion-textarea>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">What further action is required</ion-label>
+      <ion-textarea rows="2" cols="20" placeholder="Enter any notes here..."></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Date and Time</ion-label>
+      <!--<ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>-->
+    </ion-item>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <label>Upload Photo</label>
+        </ion-col>
+        <ion-col><ion-button shape="round" color="dark">upload</ion-button></ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Incident classification</ion-label>
+      <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">  
+        <ion-select-option value="value1">Low</ion-select-option>  
+        <ion-select-option value="value2">Minor</ion-select-option>    
+        <ion-select-option value="value3">Moderate</ion-select-option>    
+        <ion-select-option value="value4">Major</ion-select-option>    
+        <ion-select-option value="value5">Critical</ion-select-option>    
+      </ion-select>  
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Root Cause</ion-label>
+      <ion-textarea rows="2" cols="20" placeholder="Enter any notes here..."></ion-textarea>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Recipients</ion-label>
+      <ion-input type="recipient" required></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="danger" expand="block">Submit</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
 
 </ion-content>

@@ -1,7 +1,14 @@
-.active {
-
+/*.active {
+    --ion-text-color: var(--ion-color-dark);
+    ion-icon{
+        --ion-text-color-rgb: var(--ion-color-dark);
+    }
 }
 
 .active-parent{
-    
+    font-weight: 500;
+}*/
+
+.row-center{
+    text-align: center;
 }

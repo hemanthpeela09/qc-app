@@ -1,107 +1,58 @@
-<!--<ion-header>
+<ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>reports</ion-title>
+    <ion-title>Reports</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-item lines="full">
+    <ion-label position="floating">Select the Project to download the report</ion-label>
+    <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">  
+      <ion-select-option value="value1">Project - Steel plant</ion-select-option>  
+      <ion-select-option value="value2">Project - HPCL</ion-select-option>    
+      <ion-select-option value="value3">Project - BHEL</ion-select-option>    
+      <ion-select-option value="value4">Project - Port</ion-select-option>    
+      <ion-select-option value="value5">Project - Railways</ion-select-option>    
+    </ion-select>  
+  </ion-item>
 
-</ion-content>-->
+  <ion-item>
+    <ion-label>From Date</ion-label>
+    <!--<ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>-->
+  </ion-item>
 
-<ion-menu contentId="content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Reports</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-item>
+    <ion-label>To Date</ion-label>
+    <!--<ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>-->
+  </ion-item>
 
-  <ion-content>
-      <!--<div *ngfor="let p of pages">
-        <ion-menu-toggle *ngif="p.url">
-          <ion-item [routerLink]="p.url" routerDirection="root" routerLinkActive="active">
-            <ion-icon [name]="p.icon" slot="start"></ion-icon>
-            <ion-lable>
-              {{ p.title }}
-            </ion-lable>
-          </ion-item>
-        </ion-menu-toggle>
+  <br>
+  <div class="row-center">
+    <ion-button shape="round" color="dark">Show result</ion-button>
+  </div>
 
-          <ion-item button *ngif="p.children?.length > 0" (click)="p.open = !p.open"
-            [class.active-parent]="p.open" detail = "false">
-            <ion-icon slot="start" name="arrow-forward" *ngif="!p.open"></ion-icon>
-            <ion-icon slot="start" name="arrow-down" *ngif="p.open"></ion-icon>
-          </ion-item>
-      </div>-->
-    
-        <ion-menu-toggle auto-hide="false">
-          <ion-list lines="none">
-            <ion-item [routerLink]="'/'">
-              <ion-icon name="home" slot="start"></ion-icon>
-              Home
-            </ion-item>  
-          </ion-list>
-        </ion-menu-toggle>
-        <ion-item lines="none" (click)="HSRreport === 1 ? HSRreport = 0 : HSRreport = 1">
-          <ion-icon name="logo-buffer" slot="start"></ion-icon>
-          HSE Reports
-          <ion-icon slot="end" name="HSRreport? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
-        </ion-item>
-  
-        <ion-menu-toggle auto-hide="false">
-          <ion-list lines="none">
-            <ion-item menuclose [hidden]="!HSRreport" [routerLink]="['/notifications']"
-              [queryParams]="{ type: 'document' }" menuClose class="sub-menu">
-              <ion-icon name="document" slot="start"></ion-icon>
-              Incident\Accident
-            </ion-item>
-            <ion-item menuclose [hidden]="!HSRreport" [routerLink]="['/notifications']"
-              [queryParams]="{ type: 'document' }" menuClose class="sub-menu">
-              <ion-icon name="document" slot="start"></ion-icon>
-              Hazard
-            </ion-item>
-          </ion-list>
-        </ion-menu-toggle>
+  <ion-grid class="ion-margin">
+    <ion-row>
+      <ion-col>Select Project</ion-col>
+      <ion-col>Project/Division</ion-col>
+      <ion-col>Location</ion-col>
+      <ion-col>Type</ion-col>
+      <ion-col>Date created</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let project of projects;index as i">
+      <ion-col><ion-checkbox color="dark"></ion-checkbox></ion-col>
+      <ion-col>{{ project.value1 }}</ion-col>
+      <ion-col>{{ project.location }}</ion-col>
+      <ion-col>{{ project.type }}</ion-col>
+      <ion-col>{{ project.date }}</ion-col>
+    </ion-row>
+  </ion-grid>
 
-        <ion-item lines="none" (click)="Qualityreport === 1 ? Qualityreport = 0 : Qualityreport = 1">
-          <ion-icon name="logo-buffer" slot="start"></ion-icon>
-          Quality Reports
-          <ion-icon slot="end" name="Qualityreport? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
-        </ion-item>
-  
-        <ion-menu-toggle auto-hide="false">
-          <ion-list lines="none">
-            <ion-item menuclose [hidden]="!Qualityreport" [routerLink]="['/notifications']"
-              [queryParams]="{ type: 'document' }" menuClose class="sub-menu">
-              <ion-icon name="document" slot="start"></ion-icon>
-              Non Confirmance
-            </ion-item>
-            <ion-item menuclose [hidden]="!Qualityreport" [routerLink]="['/notifications']"
-              [queryParams]="{ type: 'document' }" menuClose class="sub-menu">
-              <ion-icon name="document" slot="start"></ion-icon>
-              Fit up Inspection
-            </ion-item>
-            <ion-item menuclose [hidden]="!Qualityreport" [routerLink]="['/notifications']"
-              [queryParams]="{ type: 'document' }" menuClose class="sub-menu">
-              <ion-icon name="document" slot="start"></ion-icon>
-              Weld Visuals
-            </ion-item>
-            <ion-item menuclose [hidden]="!Qualityreport" [routerLink]="['/notifications']"
-              [queryParams]="{ type: 'document' }" menuClose class="sub-menu">
-              <ion-icon name="document" slot="start"></ion-icon>
-              NDT Reports
-            </ion-item>
-          </ion-list>
-        </ion-menu-toggle>
+  <ion-button type="submit" color="danger" expand="block">Download report</ion-button>
 
-  </ion-content>
-</ion-menu>
-
-<ion-router-outlet id="content" main></ion-router-outlet>
+</ion-content>
 
 
