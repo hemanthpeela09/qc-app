@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-hse',
@@ -17,7 +18,16 @@ export class HSEPage implements OnInit {
     subHeader: 'Select specific report to create'  
   };  
 
-  constructor() { }
+  constructor(public toastController: ToastController) {}
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'HSE Report created successfully',
+      duration: 2000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
 
   ngOnInit() {
     

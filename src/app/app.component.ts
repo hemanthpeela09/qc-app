@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -16,4 +17,9 @@ export class AppComponent {
   ];
   //public labels = ['Site 1', 'Site 2', 'Site 3', 'Site 4', 'Site 5'];
   constructor() {}
+
+  
+    
+
+    
 }

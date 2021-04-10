@@ -10,7 +10,7 @@
 <ion-content>
   <ion-item lines="full">
     <ion-label position="floating">Select the Project to download the report</ion-label>
-    <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">  
+    <ion-select [(ngModel)]="selectedValue" interface="action-sheet" placeholder="Select One" (click)="onButtonClick()">  
       <ion-select-option value="value1">Project - Steel plant</ion-select-option>  
       <ion-select-option value="value2">Project - HPCL</ion-select-option>    
       <ion-select-option value="value3">Project - BHEL</ion-select-option>    
@@ -21,20 +21,20 @@
 
   <ion-item>
     <ion-label>From Date</ion-label>
-    <!--<ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>-->
+    <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="fromDate"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>To Date</ion-label>
-    <!--<ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>-->
+    <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="toDate"></ion-datetime>
   </ion-item>
 
   <br>
   <div class="row-center">
-    <ion-button shape="round" color="dark">Show result</ion-button>
+    <ion-button shape="round" color="dark" (click)="getData()">Show result</ion-button>
   </div>
 
-  <ion-grid class="ion-margin">
+  <ion-grid class="ion-margin" *ngIf="buttonClicked">
     <ion-row>
       <ion-col>Select Project</ion-col>
       <ion-col>Project/Division</ion-col>
@@ -42,9 +42,9 @@
       <ion-col>Type</ion-col>
       <ion-col>Date created</ion-col>
     </ion-row>
-    <ion-row *ngFor="let project of projects;index as i">
+    <ion-row *ngFor="let project of filterData;index as i">
       <ion-col><ion-checkbox color="dark"></ion-checkbox></ion-col>
-      <ion-col>{{ project.value1 }}</ion-col>
+      <ion-col>{{ project.value }}</ion-col>
       <ion-col>{{ project.location }}</ion-col>
       <ion-col>{{ project.type }}</ion-col>
       <ion-col>{{ project.date }}</ion-col>

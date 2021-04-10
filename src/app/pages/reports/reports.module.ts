@@ -19,3 +19,4 @@ import { ReportsPage } from './reports.page';
   declarations: [ReportsPage]
 })
 export class ReportsPageModule {}
+
