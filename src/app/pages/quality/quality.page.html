@@ -17,14 +17,15 @@
       [(ngModel)]="quality" (ionChange)="onChange(quality)">  
         <ion-select-option value="ncform">Non Confirmance</ion-select-option>  
         <ion-select-option value="fiform">Fit up Inspection</ion-select-option>  
-        <ion-select-option value="wvform">Weld Visuals</ion-select-option>  
-        <ion-select-option value="ndtform">NDT Report</ion-select-option>  
+        <ion-select-option value="wvform">Weld Visual Inspection</ion-select-option>  
+        <ion-select-option value="ndtform">NDT Report</ion-select-option>
+        <ion-select-option value="vform">Visual Report</ion-select-option>  
       </ion-select>  
     </ion-item>    
   </ion-list>  
 
   <form *ngIf="quality">
-    <div *ngIf="quality != 'fiform' ">
+    <div *ngIf="!(quality == 'fiform' || quality == 'wvform')">
       <ion-item lines="full">
         <ion-label position="floating">Project/Division</ion-label>
         <ion-input type="text" required></ion-input>
@@ -42,8 +43,7 @@
             <ion-select-option *ngFor="let reportType of nonConfList">{{reportType}}</ion-select-option>
           </ion-select>
   
-          <ion-label *ngIf="quality == 'wvform'">Type of Near miss*</ion-label>
-          <ion-label *ngIf="quality == 'ndtform'">Area of Improvement*</ion-label>
+          <ion-label *ngIf="(quality == 'ndtform' || quality == 'vform')">Area of Improvement*</ion-label>
            <ion-select interface="action-sheet" name="reportType" placeholder="Select One" 
               [(ngModel)]="reportType" [interfaceOptions]="customReportTypeOptions"  *ngIf="quality != 'ncform'" required>  
             <ion-select-option *ngFor="let reportType of otherList">{{reportType}}</ion-select-option>
@@ -52,8 +52,8 @@
   
       <ion-item lines="full">
         <ion-label position="floating" *ngIf="quality == 'ncform'">Description of NCR</ion-label>
-        <ion-label position="floating" *ngIf="quality == 'wvform'">Description of Weld Visuals</ion-label>
         <ion-label position="floating" *ngIf="quality == 'ndtform'">Description of NDT Report</ion-label>
+        <ion-label position="floating" *ngIf="quality == 'vform'">Description of Visual Report</ion-label>
         <ion-textarea rows="2" cols="20" placeholder="Enter any notes here..."></ion-textarea>
       </ion-item>
   
@@ -179,6 +179,123 @@
             <ion-item lines="full">
               <ion-label position="floating">Grade/Type</ion-label>
               <ion-input type="text" name="g2" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+
+      <ion-item lines="full">
+        <ion-label position="floating">Dimensions (mm)</ion-label>
+        <ion-input type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">
+        <ion-label position="floating">Prepared By</ion-label>
+        <ion-input type="text" placeholder="Enter your name" required></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">
+        <ion-label position="floating">Accepted By</ion-label>
+        <ion-input type="text" placeholder="Enter your name" required></ion-input>
+      </ion-item>
+
+    </div>
+
+<!--New changes-->
+    <div *ngIf="quality == 'wvform'">
+
+      <ion-item lines="full">
+        <ion-label position="floating">Project Name</ion-label>
+        <ion-input type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">
+        <ion-label position="floating">WPS Number</ion-label>
+        <ion-input type="text" required></ion-input>
+      </ion-item>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Drawing Number: </ion-label>
+              <ion-input type="text" name="drawNo" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Report Number: </ion-label>
+              <ion-input type="text" name="reportNo" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Joint Number:</ion-label>
+              <ion-input type="text" name="jointNo" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Report Date:</ion-label>
+              <ion-input type="text" name="refDate" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+
+      <ion-grid>
+        <ion-title size="small">Material 1:</ion-title>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Types</ion-label>
+              <ion-input type="text" name="h1" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Thickness (mm)</ion-label>
+              <ion-input type="text" name="t1" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+        
+        </ion-row>
+
+        <ion-title size="small">Material 2:</ion-title>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Types</ion-label>
+              <ion-input type="text" name="h2" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Thickness (mm)</ion-label>
+              <ion-input type="text" name="t2" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-title size="small">Welder Number:</ion-title>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">R</ion-label>
+              <ion-input type="text" name="welderR" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">L\C</ion-label>
+              <ion-input type="text" name="welderLC" placeholder="Enter value" required></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>

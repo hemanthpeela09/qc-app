@@ -8,6 +8,25 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-item lines="full">
+    <ion-label position="floating">Select the Type of report</ion-label>
+    <ion-select [(ngModel)]="selectedValue" interface="action-sheet" placeholder="Select One" (click)="onButtonClick()">  
+      <ion-select-option value="value1">HSE Report</ion-select-option>  
+      <ion-select-option value="value2">Quality Report</ion-select-option>    
+    </ion-select>  
+  </ion-item>
+
+
+  <ion-item lines="full">
+    <ion-label position="floating">Choose Specific report</ion-label>
+    <ion-select [(ngModel)]="selectedValue" interface="action-sheet" placeholder="Select One" (click)="onButtonClick()">  
+      <ion-select-option value="value1">HSE Report</ion-select-option>  
+      <ion-select-option value="value2">Quality Report</ion-select-option>    
+    </ion-select>  
+  </ion-item>
+
+
   <ion-item lines="full">
     <ion-label position="floating">Select the Project to download the report</ion-label>
     <ion-select [(ngModel)]="selectedValue" interface="action-sheet" placeholder="Select One" (click)="onButtonClick()">  
