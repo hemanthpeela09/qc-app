@@ -1,7 +1,10 @@
 {
   "name": "QC App",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {
+      "enabled": false
+    },
+    "cordova": {}
   },
   "type": "angular",
   "id": "effe72b5"

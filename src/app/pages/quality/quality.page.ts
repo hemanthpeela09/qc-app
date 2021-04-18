@@ -13,6 +13,19 @@ export class QualityPage implements OnInit {
     subHeader: 'Select specific report to create'  
   };  
 
+  nonConfList = [
+    'Equipment Defect', 'Workmanship', 'System Defect', 'Customer Complaint', 'Supplier error'
+  ];
+
+  otherList = [
+    'Equipment interface', 'Workmanship', 'Systems', 'Customer Interaction', 'Supplier Product'
+  ];
+
+  customReportTypeOptions: any = {
+    header: 'Type of Report',
+    subHeader: 'Select specific report to create'  
+  };  
+  
   constructor(public toastController: ToastController) {}
 
   async presentToast() {
@@ -28,4 +41,7 @@ export class QualityPage implements OnInit {
   ngOnInit() {
   }
 
+  onChange(selectedReport: any){
+    console.log("Selected:",selectedReport);
+  }
 }

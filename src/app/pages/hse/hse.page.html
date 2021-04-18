@@ -12,14 +12,17 @@
         <ion-list-header>Select a HSE Report and click on create button</ion-list-header>       
         <ion-item>  
           <ion-label>Choose specific report</ion-label>  
-          <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">  
+          <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" 
+          placeholder="Select One" [(ngModel)]="value" (ionChange)="onChange(value)">  
             <ion-select-option value="iaform">Incident\Accident</ion-select-option>  
-            <ion-select-option value="fiform">Hazard</ion-select-option>    
+            <ion-select-option value="hzform">Hazard</ion-select-option>   
+            <ion-select-option value="nmform">Near Miss (HSE)</ion-select-option>   
+            <ion-select-option value="boform">Behavioral Observation</ion-select-option>    
           </ion-select>  
         </ion-item>    
       </ion-list>  
 
-  <form>
+  <form *ngIf="value">
     <ion-item lines="full">
       <ion-label position="floating">Project/Division</ion-label>
       <ion-input type="text" required></ion-input>
@@ -31,18 +34,35 @@
     </ion-item>
 
     <ion-item lines="full">
-      <ion-label position="floating">Type of accident/incident*</ion-label>
-      <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">  
-        <ion-select-option value="value1">Injury</ion-select-option>  
-        <ion-select-option value="value2">Damage</ion-select-option>    
-        <ion-select-option value="value3">Environment</ion-select-option>    
-        <ion-select-option value="value4">Breach of procedure</ion-select-option>    
-        <ion-select-option value="value5">Other</ion-select-option>    
-      </ion-select>  
+      <ion-label *ngIf="value == 'iaform'">Type of Accident/Incident*</ion-label>
+         <ion-select interface="action-sheet" name="reportType" placeholder="Select One" 
+            [(ngModel)]="reportType" [interfaceOptions]="customReportTypeOptions"  *ngIf="value == 'iaform'" required>  
+          <ion-select-option *ngFor="let reportType of incidentList">{{reportType}}</ion-select-option>
+        </ion-select>
+
+        <ion-label *ngIf="value == 'hzform'">Hazard Type*</ion-label>
+        <ion-select interface="action-sheet" name="reportType" placeholder="Select One" 
+            [(ngModel)]="reportType" [interfaceOptions]="customReportTypeOptions"  *ngIf="value == 'hzform'" required>  
+          <ion-select-option *ngFor="let reportType of hazardTypeList">{{reportType}}</ion-select-option>
+        </ion-select>
+
+        <ion-label *ngIf="value == 'nmform'">Type of Near miss*</ion-label>
+        <ion-select interface="action-sheet" name="reportType" placeholder="Select One" 
+            [(ngModel)]="reportType" [interfaceOptions]="customReportTypeOptions"  *ngIf="value == 'nmform'" required>  
+          <ion-select-option *ngFor="let reportType of nearMissList">{{reportType}}</ion-select-option>
+        </ion-select>
+
+        <ion-label *ngIf="value == 'boform'">Type of Behaviour*</ion-label>
+        <ion-select interface="action-sheet" name="reportType" placeholder="Select One" 
+            [(ngModel)]="reportType" [interfaceOptions]="customReportTypeOptions"  *ngIf="value == 'boform'" required>  
+          <ion-select-option *ngFor="let reportType of behaviourList">{{reportType}}</ion-select-option>
+        </ion-select>
     </ion-item>
 
     <ion-item lines="full">
-      <ion-label position="floating">Description of the incident</ion-label>
+      <ion-label position="floating" *ngIf="value == 'iaform' || value == 'boform' " >Description of the Incident</ion-label>
+      <ion-label position="floating" *ngIf="value == 'hzform'" >Description of the Hazard</ion-label>
+      <ion-label position="floating" *ngIf="value == 'nmform'" >Description of the Near miss</ion-label>
       <ion-textarea rows="2" cols="20" placeholder="Enter any notes here..."></ion-textarea>
     </ion-item>
 
@@ -58,7 +78,7 @@
 
     <ion-item>
       <ion-label>Date and Time</ion-label>
-      <!--<ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>-->
+      <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>
     </ion-item>
 
     <ion-grid>

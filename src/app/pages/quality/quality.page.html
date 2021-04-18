@@ -13,7 +13,8 @@
     <ion-list-header>Select a Quality Report and click on create button</ion-list-header>       
     <ion-item>  
       <ion-label>Choose specific report</ion-label>  
-      <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">  
+      <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One"
+      [(ngModel)]="quality" (ionChange)="onChange(quality)">  
         <ion-select-option value="ncform">Non Confirmance</ion-select-option>  
         <ion-select-option value="fiform">Fit up Inspection</ion-select-option>  
         <ion-select-option value="wvform">Weld Visuals</ion-select-option>  
@@ -22,77 +23,184 @@
     </ion-item>    
   </ion-list>  
 
-  <form>
-    <ion-item lines="full">
-      <ion-label position="floating">Project/Division</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
+  <form *ngIf="quality">
+    <div *ngIf="quality != 'fiform' ">
+      <ion-item lines="full">
+        <ion-label position="floating">Project/Division</ion-label>
+        <ion-input type="text" required></ion-input>
+      </ion-item>
+  
+      <ion-item lines="full">
+        <ion-label position="floating">Location</ion-label>
+        <ion-input type="email" required></ion-input>
+      </ion-item>
+  
+      <ion-item lines="full">
+         <ion-label *ngIf="quality == 'ncform'">Type of Non Conformance*</ion-label>
+           <ion-select interface="action-sheet" name="reportType" placeholder="Select One" 
+              [(ngModel)]="reportType" [interfaceOptions]="customReportTypeOptions"  *ngIf="quality == 'ncform'" required>  
+            <ion-select-option *ngFor="let reportType of nonConfList">{{reportType}}</ion-select-option>
+          </ion-select>
+  
+          <ion-label *ngIf="quality == 'wvform'">Type of Near miss*</ion-label>
+          <ion-label *ngIf="quality == 'ndtform'">Area of Improvement*</ion-label>
+           <ion-select interface="action-sheet" name="reportType" placeholder="Select One" 
+              [(ngModel)]="reportType" [interfaceOptions]="customReportTypeOptions"  *ngIf="quality != 'ncform'" required>  
+            <ion-select-option *ngFor="let reportType of otherList">{{reportType}}</ion-select-option>
+          </ion-select>
+      </ion-item>
+  
+      <ion-item lines="full">
+        <ion-label position="floating" *ngIf="quality == 'ncform'">Description of NCR</ion-label>
+        <ion-label position="floating" *ngIf="quality == 'wvform'">Description of Weld Visuals</ion-label>
+        <ion-label position="floating" *ngIf="quality == 'ndtform'">Description of NDT Report</ion-label>
+        <ion-textarea rows="2" cols="20" placeholder="Enter any notes here..."></ion-textarea>
+      </ion-item>
+  
+      <ion-item lines="full">
+        <ion-label position="floating">What action did you take</ion-label>
+        <ion-textarea rows="2" cols="20" placeholder="Enter any notes here..."></ion-textarea>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Date and Time</ion-label>
+       <!-- <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>-->
+      </ion-item>
+  
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <label>Upload Photo</label>
+          </ion-col>
+          <ion-col><ion-button shape="round" color="dark">upload</ion-button></ion-col>
+        </ion-row>
+      </ion-grid>
+  
+      <ion-item lines="full">
+        <ion-label position="floating">Recipients</ion-label>
+        <ion-input type="recipient" required></ion-input>
+      </ion-item>
+    </div>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Location</ion-label>
-      <ion-input type="email" required></ion-input>
-    </ion-item>
+    <div *ngIf="quality == 'fiform'">
+      <ion-item lines="full">
+        <ion-label position="floating">WPS Number</ion-label>
+        <ion-input type="text" required></ion-input>
+      </ion-item>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Type of accident/incident*</ion-label>
-      <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">  
-        <ion-select-option value="value1">Injury</ion-select-option>  
-        <ion-select-option value="value2">Damage</ion-select-option>    
-        <ion-select-option value="value3">Environment</ion-select-option>    
-        <ion-select-option value="value4">Breach of procedure</ion-select-option>    
-        <ion-select-option value="value5">Other</ion-select-option>    
-      </ion-select>  
-    </ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Drawing Number: </ion-label>
+              <ion-input type="text" name="drawNo" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Report Number: </ion-label>
+              <ion-input type="text" name="reportNo" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Description of the incident</ion-label>
-      <ion-textarea rows="2" cols="20" placeholder="Enter any notes here..."></ion-textarea>
-    </ion-item>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Joint Number:</ion-label>
+              <ion-input type="text" name="jointNo" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Reference Date:</ion-label>
+              <ion-input type="text" name="refDate" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
 
-    <ion-item lines="full">
-      <ion-label position="floating">What action did you take</ion-label>
-      <ion-textarea rows="2" cols="20" placeholder="Enter any notes here..."></ion-textarea>
-    </ion-item>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Joint Type:</ion-label>
+              <ion-input type="text" name="jointType" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Reference:</ion-label>
+              <ion-input type="text" name="ref" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
-    <ion-item lines="full">
-      <ion-label position="floating">What further action is required</ion-label>
-      <ion-textarea rows="2" cols="20" placeholder="Enter any notes here..."></ion-textarea>
-    </ion-item>
+      <ion-grid>
+        <ion-title size="small">Material 1:</ion-title>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Heat No</ion-label>
+              <ion-input type="text" name="h1" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Thickness (mm)</ion-label>
+              <ion-input type="text" name="t1" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Grade/Type</ion-label>
+              <ion-input type="text" name="g1" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
 
-    <ion-item>
-      <ion-label>Date and Time</ion-label>
-      <!--<ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>-->
-    </ion-item>
+        <ion-title size="small">Material 2:</ion-title>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Heat No</ion-label>
+              <ion-input type="text" name="h2" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Thickness (mm)</ion-label>
+              <ion-input type="text" name="t2" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">Grade/Type</ion-label>
+              <ion-input type="text" name="g2" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
 
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <label>Upload Photo</label>
-        </ion-col>
-        <ion-col><ion-button shape="round" color="dark">upload</ion-button></ion-col>
-      </ion-row>
-    </ion-grid>
+      </ion-grid>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Incident classification</ion-label>
-      <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">  
-        <ion-select-option value="value1">Low</ion-select-option>  
-        <ion-select-option value="value2">Minor</ion-select-option>    
-        <ion-select-option value="value3">Moderate</ion-select-option>    
-        <ion-select-option value="value4">Major</ion-select-option>    
-        <ion-select-option value="value5">Critical</ion-select-option>    
-      </ion-select>  
-    </ion-item>
+      <ion-item lines="full">
+        <ion-label position="floating">Dimensions (mm)</ion-label>
+        <ion-input type="text" required></ion-input>
+      </ion-item>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Root Cause</ion-label>
-      <ion-textarea rows="2" cols="20" placeholder="Enter any notes here..."></ion-textarea>
-    </ion-item>
+      <ion-item lines="full">
+        <ion-label position="floating">Prepared By</ion-label>
+        <ion-input type="text" placeholder="Enter your name" required></ion-input>
+      </ion-item>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Recipients</ion-label>
-      <ion-input type="recipient" required></ion-input>
-    </ion-item>
+      <ion-item lines="full">
+        <ion-label position="floating">Accepted By</ion-label>
+        <ion-input type="text" placeholder="Enter your name" required></ion-input>
+      </ion-item>
+
+    </div>
 
     <ion-row>
       <ion-col>
