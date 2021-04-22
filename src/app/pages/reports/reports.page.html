@@ -11,23 +11,23 @@
 
   <ion-item lines="full">
     <ion-label position="floating">Select the Type of report</ion-label>
-    <ion-select [(ngModel)]="selectedValue" [interfaceOptions]="customReportTypeOptions" interface="action-sheet" placeholder="Select One" (click)="onButtonClick()">  
+    <ion-select [(ngModel)]="selectedValue" [interfaceOptions]="customReportTypeOptions" interface="action-sheet" placeholder="Select One" (click)="fetchReport(selectedValue)">  
       <ion-select-option value="value1">HSE Report</ion-select-option>  
       <ion-select-option value="value2">Quality Report</ion-select-option>    
     </ion-select>  
   </ion-item>
 
 
-  <ion-item lines="full">
+ <!--<ion-item lines="full">
     <ion-label position="floating">Choose Specific report</ion-label>
     <ion-select [(ngModel)]="selectedValue" [interfaceOptions]="customSpecificTypeOptions" interface="action-sheet" placeholder="Select One" (click)="onButtonClick()">  
       <ion-select-option value="value1">HSE Report</ion-select-option>  
       <ion-select-option value="value2">Quality Report</ion-select-option>    
     </ion-select>  
-  </ion-item>
+  </ion-item>--> 
 
 
-  <ion-item lines="full">
+ <!-- <ion-item lines="full">
     <ion-label position="floating">Select the Project to download the report</ion-label>
     <ion-select [(ngModel)]="selectedValue" interface="action-sheet" placeholder="Select One" (click)="onButtonClick()">  
       <ion-select-option value="value1">Project - Steel plant</ion-select-option>  
@@ -36,7 +36,7 @@
       <ion-select-option value="value4">Project - Port</ion-select-option>    
       <ion-select-option value="value5">Project - Railways</ion-select-option>    
     </ion-select>  
-  </ion-item>
+  </ion-item>-->
 
   <ion-item>
     <ion-label>From Date</ion-label>
@@ -55,22 +55,20 @@
 
   <ion-grid class="ion-margin" *ngIf="buttonClicked">
     <ion-row>
-      <ion-col>Select Project</ion-col>
+      <ion-col size="2" >Select</ion-col>
       <ion-col>Project/Division</ion-col>
       <ion-col>Location</ion-col>
-      <ion-col>Type</ion-col>
-      <ion-col>Date created</ion-col>
+      <ion-col>Report Type</ion-col>
     </ion-row>
     <ion-row *ngFor="let project of filterData;index as i">
-      <ion-col><ion-checkbox color="dark"></ion-checkbox></ion-col>
-      <ion-col>{{ project.value }}</ion-col>
+      <ion-col size= "2"><ion-checkbox color="dark" [(ngModel)]='project.selected' (click)="setReport(project)"></ion-checkbox></ion-col>
+      <ion-col>{{ project.project }}</ion-col>
       <ion-col>{{ project.location }}</ion-col>
-      <ion-col>{{ project.type }}</ion-col>
-      <ion-col>{{ project.date }}</ion-col>
+      <ion-col>{{ project.reportType }}</ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-button type="submit" color="danger" expand="block">Download report</ion-button>
+  <ion-button type="submit" color="danger" expand="block" (click)="generatePDF(project)">Download report</ion-button>
 
 </ion-content>
 

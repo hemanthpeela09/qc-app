@@ -76,26 +76,12 @@ export class HSEPage implements OnInit {
       let loader = await this.loadingCtrl.create({
         message: "Please wait..."
       });
+
      loader.present();
 
 
       try{
         console.log("Entered Data :"+ JSON.stringify(hse));
-          //this.firestore.collection("hseReports").add(hse);
-        /*this.firestoreService.createHSEReport(hse.form,
-          hse.project,
-          hse.location,
-          hse.reportType,
-          hse.date,
-          hse.description,
-          hse.action,
-          hse.actionReq,
-          hse.incident,
-          hse.rootcause,
-          hse.recipients).then(
-
-        );*/
-
         this.firestoreService.createHSEReport(hse);
           toast.present();
           this.router.navigateByUrl('/report');

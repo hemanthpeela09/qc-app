@@ -9,5 +9,6 @@ export interface Hse {
     actionReq: String,
     incident: String,
     rootcause: String,
-    recipients: String
+    recipients: String,
+    formatDate: String
 }

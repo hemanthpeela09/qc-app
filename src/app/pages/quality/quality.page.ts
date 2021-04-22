@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quality',
@@ -26,7 +27,8 @@ export class QualityPage implements OnInit {
     subHeader: 'Select specific report to create'  
   };  
   
-  constructor(public toastController: ToastController) {}
+  constructor(public toastController: ToastController,
+    private router: Router) {}
 
   async presentToast() {
     const toast = await this.toastController.create({
@@ -35,6 +37,7 @@ export class QualityPage implements OnInit {
       position: 'bottom'
     });
     toast.present();
+    this.router.navigateByUrl('/report');
   }
 
 

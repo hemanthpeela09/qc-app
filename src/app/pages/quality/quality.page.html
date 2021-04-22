@@ -25,7 +25,7 @@
   </ion-list>  
 
   <form *ngIf="quality">
-    <div *ngIf="!(quality == 'fiform' || quality == 'wvform')">
+    <div *ngIf="!(quality == 'fiform' || quality == 'wvform' || quality == 'ndtform' )">
       <ion-item lines="full">
         <ion-label position="floating">Project/Division</ion-label>
         <ion-input type="text" required></ion-input>
@@ -43,7 +43,7 @@
             <ion-select-option *ngFor="let reportType of nonConfList">{{reportType}}</ion-select-option>
           </ion-select>
   
-          <ion-label *ngIf="(quality == 'ndtform' || quality == 'vform')">Area of Improvement*</ion-label>
+          <ion-label *ngIf="quality == 'vform'">Area of Improvement*</ion-label>
            <ion-select interface="action-sheet" name="reportType" placeholder="Select One" 
               [(ngModel)]="reportType" [interfaceOptions]="customReportTypeOptions"  *ngIf="quality != 'ncform'" required>  
             <ion-select-option *ngFor="let reportType of otherList">{{reportType}}</ion-select-option>
@@ -52,7 +52,6 @@
   
       <ion-item lines="full">
         <ion-label position="floating" *ngIf="quality == 'ncform'">Description of NCR</ion-label>
-        <ion-label position="floating" *ngIf="quality == 'ndtform'">Description of NDT Report</ion-label>
         <ion-label position="floating" *ngIf="quality == 'vform'">Description of Visual Report</ion-label>
         <ion-textarea rows="2" cols="20" placeholder="Enter any notes here..."></ion-textarea>
       </ion-item>
@@ -203,7 +202,7 @@
     </div>
 
 <!--New changes-->
-    <div *ngIf="quality == 'wvform'">
+    <div *ngIf="quality == 'wvform' || quality == 'ndtform' ">
 
       <ion-item lines="full">
         <ion-label position="floating">Project Name</ion-label>
@@ -250,7 +249,7 @@
 
       </ion-grid>
 
-      <ion-grid>
+      <ion-grid *ngIf="quality == 'wvform' ">
         <ion-title size="small">Material 1:</ion-title>
         <ion-row>
           <ion-col>
@@ -302,7 +301,55 @@
 
       </ion-grid>
 
-      <ion-item lines="full">
+      <ion-grid *ngIf="quality == 'ndtform'">
+        <ion-title size="small">NDT Type:</ion-title>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">RT/UT</ion-label>
+              <ion-input type="text" name="h1" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">DPT</ion-label>
+              <ion-input type="text" name="t1" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+        
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">MPT</ion-label>
+              <ion-input type="text" name="h2" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">PWHT</ion-label>
+              <ion-input type="text" name="t2" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-title size="small">Welder Number:</ion-title>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">R</ion-label>
+              <ion-input type="text" name="welderR" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item lines="full">
+              <ion-label position="floating">L\C</ion-label>
+              <ion-input type="text" name="welderLC" placeholder="Enter value" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+
+      <ion-item lines="full" *ngIf="quality != 'ndtform' ">
         <ion-label position="floating">Dimensions (mm)</ion-label>
         <ion-input type="text" required></ion-input>
       </ion-item>
