@@ -27,7 +27,7 @@ export class ReportsPage implements OnInit {
   hse = {} as Hse;
   filterData = [];
   selectedfilterData = [];   
-  
+  report = {} as Hse;
 
   customReportTypeOptions: any = {  
     header: 'Choose Report to download',  
@@ -50,9 +50,7 @@ export class ReportsPage implements OnInit {
     this.onButtonClick();
     this.filterData = [];
     this.reportList.subscribe(data => {
-        console.log("retrieved from DB "+data);
         data.forEach(res => {
-          console.log("For loop set value"+res.project);
           this.filterData.push(res);
         })
       })
@@ -83,47 +81,55 @@ export class ReportsPage implements OnInit {
       this.filterData.filter(r => r.id != val.id).forEach(r => {
         r.selected = false;
       })
-      this.selectedfilterData = [];         
+      this.selectedfilterData = [];     
     }
   
-    if (!val.selected) { this.selectedfilterData.push(val); }
-    else if (val.selected) {            
+    if (!val.selected) {
+      this.report = val;
+      this.selectedfilterData.push(val); 
+    } else if (val.selected) {            
       let index = this.selectedfilterData.findIndex(c => c.id == val.id);
       if (index > -1) { this.selectedfilterData.splice(index, 1); }            
     } 
   }
 
   generatePDF(){
-    console.log(this.selectedfilterData);
-    this.loadLocalAssetToBase64();
-    const image = this.photoPreview ?  {image: this.photoPreview, width: 300} : {};
-    let logo = {image: this.logoData, width: 50};
+    let photo = this.loadLocalAssetToBase64();
 
     var docDefinition = {
       content: [
-        { text: 'REMINDER', style: 'header' },
-        { text: new Date().toTimeString(), alignment: 'right' },
+        { text: 'QA APP - HSE Generated Report', style: 'header'},
+        
+        { text: 'Project: ' + this.report.project, style: 'header'},
+        
+        { text: 'Date: ' + new Date().toLocaleDateString("en-US").split("/:"), alignment: 'right' },
 
-        { text: 'From', style: 'subheader' },
-        { text: "Hemanth"},
+        { text: 'Report Type: ' + this.report.reportType, style: 'subheader'},
 
-        { text: 'To', style: 'subheader' },
-        "Govind",
+        { text: 'Location: ' + this.report.location},
 
-        { text: "QC App", style: 'story', margin: [0, 20, 0, 20] },
+        { text: 'Recepient: ' + this.report.recipients},
 
-        {
-          ul: [
-            'Bacon',
-            'Rips',
-            'BBQ',
-          ]
-        }
+        { text: 'Date created: ' + this.report.formatDate},
+
+        { text: 'Description created: ' + this.report.description},
+
+        { text: 'Action Taken: ' + this.report.action},
+
+        { text: 'Action Requested: ' + this.report.actionReq},
+
+        { text: 'Incident: ' + this.report.incident},
+
+        { text: 'Root cause: ' + this.report.rootcause},
+
+        { text: "QC App", style: 'story', margin: [0, 20, 0, 20] }
+
       ],
       styles: {
         header: {
           fontSize: 18,
           bold: true,
+          alignment: 'center',
         },
         subheader: {
           fontSize: 14,
@@ -136,11 +142,9 @@ export class ReportsPage implements OnInit {
           width: '50%',
         }
       },
-      logo
     }
     
-    this.pdfObj = pdfMake.createPDF(docDefinition);
-    console.log(this.pdfObj);
+    this.pdfObj = pdfMake.createPdf(docDefinition);
     this.download();
   }
 
@@ -175,9 +179,9 @@ export class ReportsPage implements OnInit {
         var blob = new Blob([buffer], { type: 'application/pdf' });
  
         // Save the PDF to the data Directory of our App
-        this.file.writeFile(this.file.dataDirectory, 'myletter.pdf', blob, { replace: true }).then(fileEntry => {
+        this.file.writeFile(this.file.dataDirectory, 'report.pdf', blob, { replace: true }).then(fileEntry => {
           // Open the PDf with the correct OS tools
-          this.fileOpener.open(this.file.dataDirectory + 'myletter.pdf', 'application/pdf');
+          this.fileOpener.open(this.file.dataDirectory + 'report.pdf', 'application/pdf');
         })
       });
     } else {
