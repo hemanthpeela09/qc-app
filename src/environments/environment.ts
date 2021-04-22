@@ -7,6 +7,7 @@ export const environment = {
   firebaseConfig : {
     apiKey: "AIzaSyCqtL9IPSZCj1rTJT677rYTpDg5R8RNGy8",
     authDomain: "qc-app-455fc.firebaseapp.com",
+    databaseURL: "https://qc-app-455fc-default-rtdb.firebaseio.com",
     projectId: "qc-app-455fc",
     storageBucket: "qc-app-455fc.appspot.com",
     messagingSenderId: "391947711572",

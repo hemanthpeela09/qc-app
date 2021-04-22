@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirestoreService } from "src/app/services/firestore.service";
 
 @Component({
   selector: 'app-reports',
@@ -68,15 +69,27 @@ export class ReportsPage implements OnInit {
     },
   ];
 
+  customReportTypeOptions: any = {  
+    header: 'Choose Report to download',  
+    subHeader: 'Select specific report'  
+  };  
+
+  customSpecificTypeOptions: any = {  
+    header: 'Choose Specific Report',  
+    subHeader: 'Select specific report'  
+  };  
+
   public buttonClicked: boolean = false; //Whatever you want to initialise it as
   selectedValue = "";
 
-  public getData(value: any){
+  async getData(value: any){
     this.onButtonClick();
    // alert(this.selectedValue);
-    this.filterData = this.projects.filter((location) => {
+   /* this.filterData = this.projects.filter((location) => {
       return location.id.toLowerCase().indexOf(this.selectedValue.toLowerCase()) > -1;
-    });
+    });*/
+
+    this.firestoreService.getHSEReports();
     
   }
 
@@ -84,7 +97,7 @@ export class ReportsPage implements OnInit {
       this.buttonClicked = !this.buttonClicked;
   }
   
-  constructor() { }
+  constructor(private firestoreService: FirestoreService) { }
 
   ngOnInit() {
   }

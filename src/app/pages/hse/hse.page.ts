@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
+import { 
+  ToastController,
+  LoadingController
+} from '@ionic/angular';
+import { Router } from '@angular/router';
+import { Hse } from 'src/app/shared/hse.model';
+import { FirestoreService } from "src/app/services/firestore.service";
+
 
 @Component({
   selector: 'app-hse',
@@ -9,6 +16,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class HSEPage implements OnInit {
 
+  hse = {} as Hse;
   ionicForm: FormGroup;
   defaultDate = "1987-06-30";
   isSubmitted = false;
@@ -46,15 +54,60 @@ export class HSEPage implements OnInit {
     'Delebrate', 'Failure to Act'
   ];
 
-  constructor(public toastController: ToastController) {}
+  
+  constructor(public toastCtrl: ToastController,
+    private loadingCtrl: LoadingController,
+    private firestoreService: FirestoreService,
+    private router: Router) {
 
-  async presentToast() {
-    const toast = await this.toastController.create({
+    //this.afAuth.signInAnonymously();
+    
+    }
+
+  async createHSEReport(hse: Hse) {
+
+    const toast = await this.toastCtrl.create({
       message: 'HSE Report created successfully',
       duration: 2000,
       position: 'bottom'
     });
-    toast.present();
+    
+    if(this.formValidation()){
+      let loader = await this.loadingCtrl.create({
+        message: "Please wait..."
+      });
+     loader.present();
+
+
+      try{
+        console.log("Entered Data :"+ JSON.stringify(hse));
+          //this.firestore.collection("hseReports").add(hse);
+        /*this.firestoreService.createHSEReport(hse.form,
+          hse.project,
+          hse.location,
+          hse.reportType,
+          hse.date,
+          hse.description,
+          hse.action,
+          hse.actionReq,
+          hse.incident,
+          hse.rootcause,
+          hse.recipients).then(
+
+        );*/
+
+        this.firestoreService.createHSEReport(hse);
+          toast.present();
+          this.router.navigateByUrl('/report');
+      } catch (e){
+        this.showToast(e);
+      }
+      
+      // dismiss loader
+      return await loader.dismiss();
+     // toast.present(); 
+      
+    }
   }
 
   ngOnInit() {
@@ -64,4 +117,81 @@ export class HSEPage implements OnInit {
   onChange(selectedReport: any){
     console.log("Selected:",selectedReport);
   }
+
+  formValidation() {
+
+    if (!this.hse.project) {
+      // show toast message
+      this.showToast("Enter Project Division");
+      return false;
+    }
+
+    if (!this.hse.location) {
+      // show toast message
+      this.showToast("Enter location");
+      return false;
+    }
+
+    if (!this.hse.reportType) {
+      // show toast message
+      this.showToast("Enter Report Type");
+      return false;
+    }
+
+    if (!this.hse.date) {
+      // show toast message
+      this.showToast("Enter Date");
+      return false;
+    }
+
+    if (!this.hse.description) {
+      // show toast message
+      this.showToast("Enter Description");
+      return false;
+    }
+
+    if (!this.hse.action) {
+      // show toast message
+      this.showToast("Enter Action");
+      return false;
+    }
+
+    if (!this.hse.actionReq) {
+      // show toast message
+      this.showToast("Enter Action Request");
+      return false;
+    }
+
+    if (!this.hse.incident) {
+      // show toast message
+      this.showToast("Enter Incident");
+      return false;
+    }
+
+    if (!this.hse.rootcause) {
+      // show toast message
+      this.showToast("Enter Rootcause");
+      return false;
+    }
+
+
+    if (!this.hse.recipients) {
+      // show toast message
+      this.showToast("Enter Recipients");
+      return false;
+    }
+    
+    return true;
+  }
+
+  showToast(message: string) {
+    this.toastCtrl
+      .create({
+        message: message,
+        duration: 3000
+      })
+      .then(toastData => toastData.present());
+  }
 }
+
+

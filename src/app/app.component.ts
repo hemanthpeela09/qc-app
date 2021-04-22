@@ -15,11 +15,11 @@ export class AppComponent {
   user = {} as User;
   public appPages = [
     { title: 'Home', url: '/home', icon: 'home' },
-    { title: 'HSE Reports', url: '/hse', icon: 'document' },
-    { title: 'Quality Reports', url: '/quality', icon: 'document' },
-    { title: 'Welder\'s List', url: '/folder/WeldersList', icon: 'archive' },
-    { title: 'WPS List', url: '/folder/WPSList', icon: 'archive' },
-    { title: 'Download Report', url: '/report', icon: 'briefcase' },
+    { title: 'HSE Reports', url: '/hse', icon: 'document-attach' },
+    { title: 'Quality Reports', url: '/quality', icon: 'document-attach' },
+    { title: 'Welder\'s List', url: '/folder/WeldersList', icon: 'list' },
+    { title: 'WPS List', url: '/folder/WPSList', icon: 'list' },
+    { title: 'Download Report', url: '/report', icon: 'print' },
     { title: 'Logout', url: 'signOut()', icon: 'power' },
  ];
   //public labels = ['Site 1', 'Site 2', 'Site 3', 'Site 4', 'Site 5'];
